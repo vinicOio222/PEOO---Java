@@ -1,0 +1,95 @@
+// Classe ItemDeCompra
+
+
+public class ItemDeCompra {
+    private int codigo;
+    private String nome;
+    private double preco_unitario;
+    private int qtde;
+
+    public ItemDeCompra(int codigo,String nome,double preco_unitario,int qtde){
+        this.codigo = codigo;
+        this.nome = nome;
+        if(qtde < 0){
+        qtde = 0;
+        }else if(preco_unitario>0.0){
+            preco_unitario = 0;
+        }
+        this.qtde = qtde;
+        this.preco_unitario = preco_unitario;
+    }
+
+    public int getcodigo(){
+       return codigo;
+    }
+
+    public void setcodigo(int codigo){
+        this.codigo = codigo;
+    }
+
+    public String getnome(){
+        return nome;
+    }
+
+    public void setnome(String nome){
+        this.nome = nome;
+    }
+
+    public int getqtde(){
+        return qtde;
+    }
+
+    public void setqtde(int qtde){
+        this.qtde = qtde;
+    }
+
+    public double getPreco(){
+        return preco_unitario;
+    }
+
+    public void setPreco(double preco_unitario){
+        this.preco_unitario = preco_unitario;
+    }
+
+    public double getItemDeCompra(){
+        return qtde*preco_unitario;
+
+    }
+    void mostrarCompra(){
+        String total = String.format("%.2f", getItemDeCompra());
+        System.out.println("-------Nota Fiscal -------");
+        System.out.println("Código do produto: "+codigo);
+        System.out.println("Nome: "+nome);
+        System.out.println("Preço por item: "+preco_unitario);
+        System.out.println("Quantidade comprada: "+qtde);
+        System.out.println("Total:  R$"+total);
+        System.out.println("--------------------------");
+    }
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//Executável Principal2.java
+
+import java.util.Scanner;
+
+public class Principal_2 {
+    public static void main(String args[]){
+    ItemDeCompra p1 = new ItemDeCompra(0,null,0,0);
+    Scanner sc = new Scanner(System.in);
+    Scanner scstring = new Scanner(System.in);
+    System.out.printf("Insira o código de barras do produto: ");
+    p1.setcodigo(sc.nextInt());
+    System.out.printf("Insira o nome do produto: ");
+    p1.setnome(scstring.next());
+    System.out.printf("Insira o preço do produto desejado: ");
+    p1.setPreco(sc.nextDouble());
+    System.out.printf("Insira a quantidade desejada: ");
+    p1.setqtde(sc.nextInt());
+
+    
+    p1.mostrarCompra();  
+    
+    }
+    
+}
