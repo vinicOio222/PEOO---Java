@@ -1,0 +1,140 @@
+// Classe Paises
+
+public class Paises {
+    private String nome;
+    private String nome__da_capital;
+    private int quilometro;
+    private Paises[] fronteiras;
+
+    public Paises(String nome, String nome__da_capital, int quilometro) {
+        this.nome = nome;
+        this.nome__da_capital = nome__da_capital;
+        this.quilometro = quilometro;
+    }
+    public String getNome() {
+        return nome;
+    }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    public String getNome__da_capital() {
+        return nome__da_capital;
+    }
+    public void setNome__da_capital(String nome__da_capital) {
+        this.nome__da_capital = nome__da_capital;
+    }
+    public int getQuilometro() {
+        return quilometro;
+    }
+    public void setQuilometro(int quilometro) {
+        this.quilometro = quilometro;
+    }
+    
+    public boolean comparativo(final Paises outro){
+        boolean retorno = false;
+        
+        String nome_pais = this.nome;
+        String nome_capital_pais = this.nome__da_capital;
+        
+        String nome_outro_pais = outro.getNome();
+        String nome_capital_outro_pais = outro.getNome__da_capital();
+        
+        if(nome_pais.equals(nome_outro_pais) && 
+                (nome_capital_pais.equals(nome_capital_outro_pais))){
+            retorno = true;
+        }
+        
+        return retorno;
+    }
+    
+    public void fronteira(Paises... paises){
+        int quantidadePaisesIguais = 0;
+        for(int i=0;i<paises.length;i++){
+            if(this.equals(paises[i])){
+                quantidadePaisesIguais++;
+            }
+        }
+        this.fronteiras = new Paises[paises.length - quantidadePaisesIguais];
+        int idxFronteira = 0;
+        for(int i=0;i< paises.length;i++){
+            if(!this.equals(paises[i])){
+                this.fronteiras[idxFronteira] = paises[i];
+                idxFronteira++;
+            }
+        }
+        
+    }
+    
+    public Paises[] getFronteiras(){
+        return this.fronteiras;
+    }
+
+    public Paises[] vizinhosEmComum(Paises outro) {
+        int totaisIguais = 0;
+        
+        
+        for (Paises fronteiraPais : this.fronteiras) {
+            for (Paises fronteiraOutro : outro.fronteiras) {
+                if (fronteiraPais.equals(fronteiraOutro)) {
+                    totaisIguais++;
+                }
+            }
+        }
+
+        if (totaisIguais > 0) {
+            int idxVizinhos = 0;
+            Paises[] mesmosVizinhos = new Paises[totaisIguais];
+            for (Paises fronteiraPais : this.fronteiras) {
+                for (Paises fronteiraOutro : outro.fronteiras) {
+                    if (fronteiraPais.equals(fronteiraOutro)) {
+                        mesmosVizinhos[idxVizinhos] = fronteiraOutro;
+                        idxVizinhos++;
+                    }
+                }
+            }
+
+            return mesmosVizinhos;
+        }
+        return null;
+    }    
+    
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Executável Principal3.java
+
+
+public class Principal3 {
+    public static void main(String[] args) {
+        System.out.println("Exercicios POO 1");
+        Paises paises = new Paises("Brasil","Brasília",8000000);
+        Paises paises2 = new Paises("Argentina","Buenos Aires",700000);
+        Paises paises3 = new Paises("China","Pequim",12000000);
+        Paises paises4 = new Paises("Coreia do Norte","Pyongyang",400);
+
+        System.out.println(paises.comparativo(paises));
+        System.out.println(paises.comparativo(paises2));
+        System.out.println(paises.comparativo(paises3));
+        System.out.println(paises.comparativo(paises4));
+
+        Paises[] lista = {paises,paises2,paises3,paises4};
+        
+        paises.fronteira(lista);
+
+        Paises[] lista2 = paises.getFronteiras();
+
+        System.out.println("Nome do país : "+paises.getNome());
+        for(int i = 0; i<lista2.length ; i++) System.out.println("Nome do país : "+lista2[i].getNome());
+
+        Paises[] lista3 = {paises,paises2,paises3,paises4};
+
+        paises.fronteira(lista3);
+        paises4.fronteira(lista3);
+
+        Paises[] lista4 = paises.vizinhosEmComum(paises4);
+
+        System.out.println("Paises que faz fronteira com o " + paises.getNome() + " e com " + paises4.getNome()+", respectivamente: ");
+        for(int i = 0 ; i < lista4.length ; i++) System.out.println("Nome : " + lista4[i].getNome());
+    }
+    
+}
