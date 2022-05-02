@@ -1,7 +1,11 @@
 //Classe Conta.java;
 
 public class Conta {
-    double valor;
+        private String titular;
+        private int numero;
+        private double saldo = 0;
+        double valor;
+        
         public Conta(String titular,int numero,double saldo){
           this.titular = titular;
           this.numero = numero;
@@ -38,7 +42,7 @@ public class Conta {
             System.out.println("Número = "+numero);
             System.out.println("Saldo = "+saldo);
         }
-        private String titular;
+        
         public String getTitular() {
           return titular;
         }
@@ -63,9 +67,93 @@ public class Conta {
           this.saldo = saldo;
         }
   
-        private int numero;
-        private double saldo = 0;
       }
+      
+      
+      
+      //Executável Principal.java
+      
+        import java.util.Scanner;
+        public class Principal{
+        public static void main(String args[]){
+        Conta2 c1 = new Conta2(null, 0);
+        Scanner sd = new Scanner(System.in);
+
+        //Entrada de dados
+        System.out.printf("Digite o nome do titular:");
+        c1.setTitular(sd.next());
+        System.out.printf("Digite o número da conta:");
+        c1.setConta(sd.nextInt());
+        c1.mostrarDadosBanco2();
+        System.out.println("Valor de depósito: R$");
+        c1.valor = sd.nextDouble();
+        c1.depositarConta(c1.valor);
+        System.out.println("Saldo atual R$: "+c1.getSaldo());
+        System.out.println("Valor do saque:");
+        c1.valor = sd.nextDouble();
+        
+        if(c1.sacarConta(c1.valor)){
+            System.out.println("Saque efetuado com sucesso! Novo Saldo: R$"+ c1.getSaldo());
+            }else{
+            System.out.println("Saldo Insuficiente !");
+            }
+            
+        Conta2 c2 = new Conta2(null, 0);
+        System.out.println("Digite o nome do titular = ");
+        c2.setTitular(sd.next());
+        System.out.println("Digite o número da conta = ");
+        c2.setConta(sd.nextInt());
+        System.out.println("Digite o valor da transferência = ");
+        double valor = sd.nextDouble();
+
+       if(c1.transferirConta(c2, valor))
+        System.out.println("Transferência realizada com sucesso");
+        else
+        System.out.println("Saldo insuficiente");
+
+        System.out.println("Conta Destino:");
+        c2.mostrarDadosBanco2();
+        System.out.println("Sua conta:");
+        c1.mostrarDadosBanco2();
+        }else{
+            System.out.println("Saldo insuficiente");
+        sd.close();
+        }  
+    }
+}
+
+//Banco.java
+
+
+public class Banco {
+    int qtde = 0;
+    int totalContas = 0;
+    Conta[] vetContas;
+    String nome;
+
+    public Banco(String nomeBanco,int qtdeContas){
+        nome = nomeBanco;
+        vetContas = new Conta[qtde];
+    }
+
+    boolean adicionarConta(String titular,int numero){
+        if(qtde <= totalContas){
+        Conta c = new Conta("Carlos", 1612520);
+        vetContas[qtde++] = c;
+        return true;
+    }
+    return false;
+    }
+    Conta procurar(int numero){
+        for(int i = 0; i<=qtde;i++){
+            if(vetContas[i].getNumero() == numero)
+              return vetContas[i];
+        }
+        return null;
+
+
+    }
+}
       
       
       
